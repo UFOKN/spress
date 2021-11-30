@@ -1,0 +1,3 @@
+inst/include/cpp11.hpp linguist-vendored
+inst/include/cpp11/*.hpp linguist-vendored
+inst/cpp-tests/catch.hpp linguist-vendored
