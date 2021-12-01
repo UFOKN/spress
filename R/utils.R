@@ -46,3 +46,7 @@
         paste0(x, collapse = ", ")
     )
 }
+
+grid_ <- function(n, bb) {
+  .Call(`_spress_grid_`, n, bb)
+}

@@ -1,16 +1,3 @@
-#' Encode coordinates to a Hilbert curve index
-#' @param x A `data.frame` or `numeric` vector
-#' @param ... Unused
-#' @param n Level of space division, must be between 0 and 16.
-#' @export
-encode <- function(x, ..., n = 4L) {
-    if (n > 16 | n < 0) {
-        stop("`n` is invalid. Must be between 0 and 16.")
-    }
-
-    UseMethod("encode", x)
-}
-
 #' @param coords Column indices or names corresponding to coordinates
 #' @param attach If `TRUE`, attaches index to data frame as new column
 #' @rdname encode
@@ -41,7 +28,7 @@ encode.numeric <- function(x, y, ..., n = 4L) {
         "xmax" = max(x), "xmin" = min(x),
         "ymax" = max(y), "ymin" = min(y)
     )
-    attr(en, "class") <- "spress_index"
+    attr(en, "class") <- c("spress_index", "integer")
 
     en
 }

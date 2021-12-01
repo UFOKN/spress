@@ -38,3 +38,10 @@ print.spress_index <- function(x, ...) {
 
     invisible(x)
 }
+
+#' @export
+`[.spress_index` <- function(e1, e2) {
+    x <- `[`(as.integer(e1), e2)
+    attributes(x) <- attributes(e1)
+    x
+}
