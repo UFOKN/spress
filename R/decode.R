@@ -18,15 +18,17 @@ decode <- function(x, ..., extent, n = 4L) {
 
 #' @rdname decode
 #' @export
-decode.default <- function(x, ...) {
-    stop()
+decode.spress_index <- function(x, ...) {
+    extent <- attr(x, "spress_extent", exact = TRUE)
+    n      <- attr(x, "spress_n", exact = TRUE)
+    decode(as.integer(x), extent = extent, n = n)
 }
 
 #' @param index Index or name of column containing the Hilbert curve index
 #' @rdname decode
 #' @export
 decode.data.frame <- function(x, ..., extent, index = length(x), n = 4L) {
-    encoded <- x[index]
+    encoded <- x[[index]]
 
     if (is.null(encoded)) {
         stop("Column defined by `index` does not exist.")

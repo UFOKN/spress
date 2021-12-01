@@ -2,14 +2,11 @@
 % Please edit documentation in R/encode.R
 \name{encode}
 \alias{encode}
-\alias{encode.default}
 \alias{encode.data.frame}
 \alias{encode.numeric}
 \title{Encode coordinates to a Hilbert curve index}
 \usage{
 encode(x, ..., n = 4L)
-
-\method{encode}{default}(x, ...)
 
 \method{encode}{data.frame}(x, ..., n = 4L, coords = c(1, 2), attach = FALSE)
 

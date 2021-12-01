@@ -31,3 +31,18 @@
 
     2L ^ as.integer(n)
 }
+
+#' @keywords internal
+.to_json <- function(x) {
+    n   <- attr(x, "spress_n", exact = TRUE)
+    ext <- attr(x, "spress_extent", exact = TRUE)
+    geo <- attr(x, "spress_geometry", exact = TRUE)
+
+    sprintf(
+        "{\"n\": %s, \"extent\": [%s], \"geometry\": \"%s\", \"index\": [%s]}",
+        n,
+        paste0(ext, collapse = ", "),
+        if (!is.null(geo)) geo else NA_character_,
+        paste0(x, collapse = ", ")
+    )
+}

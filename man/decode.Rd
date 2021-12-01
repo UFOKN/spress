@@ -2,7 +2,7 @@
 % Please edit documentation in R/decode.R
 \name{decode}
 \alias{decode}
-\alias{decode.default}
+\alias{decode.spress_index}
 \alias{decode.data.frame}
 \alias{decode.double}
 \alias{decode.integer}
@@ -10,7 +10,7 @@
 \usage{
 decode(x, ..., extent, n = 4L)
 
-\method{decode}{default}(x, ...)
+\method{decode}{spress_index}(x, ...)
 
 \method{decode}{data.frame}(x, ..., extent, index = length(x), n = 4L)
 
