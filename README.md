@@ -180,8 +180,9 @@ developed specifically for this package.
 
 This can be found at `inst/include/spate.hpp` from the root of this
 repository. Unit testing for this library is done with
-[Catch2](https://github.com/catchorg/Catch2) and are contained in
-`inst/cpp-tests`.
+[Catch](https://github.com/catchorg/Catch2) via `testthat`. See
+[`testthat::use_catch`](https://testthat.r-lib.org/reference/use_catch.html)
+for details on how this works.
 
 > Note that the C++ code for this package contains purely the algorithm
 > for encoding and decoding. The current roadmap for this package
