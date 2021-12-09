@@ -1,15 +1,17 @@
-// cpp11 version: 0.2.7
-// vendored on: 2021-11-29
+// cpp11 version: 0.4.1
+// vendored on: 2021-12-09
 #pragma once
 
-#include <limits>       // for numeric_limits
+#include <limits>  // for numeric_limits
+#include <ostream>
 #include <type_traits>  // for is_convertible, enable_if
 
 #include "R_ext/Boolean.h"    // for Rboolean
 #include "cpp11/R.hpp"        // for SEXP, SEXPREC, ...
 #include "cpp11/as.hpp"       // for as_sexp
 #include "cpp11/protect.hpp"  // for unwind_protect, preserved
-#include "cpp11/sexp.hpp"     // for sexp
+#include "cpp11/r_vector.hpp"
+#include "cpp11/sexp.hpp"  // for sexp
 
 namespace cpp11 {
 
@@ -23,7 +25,7 @@ class r_bool {
         value_ = static_cast<Rboolean>(LOGICAL_ELT(data, 0));
       }
     }
-    stop("Invalid r_bool value: %x", data);
+    throw std::invalid_argument("Invalid r_bool value");
   }
 
   r_bool(bool value) : value_(value ? TRUE : FALSE) {}
@@ -51,7 +53,10 @@ class r_bool {
   int value_ = na;
 };
 
-inline bool is_na(r_bool x) { return x == r_bool(); }
+inline std::ostream& operator<<(std::ostream& os, r_bool const& value) {
+  os << ((value == TRUE) ? "TRUE" : "FALSE");
+  return os;
+}
 
 template <typename T, typename R = void>
 using enable_if_r_bool = enable_if_t<std::is_same<T, r_bool>::value, R>;
@@ -61,6 +66,11 @@ enable_if_r_bool<T, SEXP> as_sexp(T from) {
   sexp res = Rf_allocVector(LGLSXP, 1);
   unwind_protect([&] { SET_LOGICAL_ELT(res.data(), 0, from); });
   return res;
+}
+
+template <>
+inline r_bool na() {
+  return NA_LOGICAL;
 }
 
 }  // namespace cpp11

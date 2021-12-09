@@ -1,9 +1,10 @@
-// cpp11 version: 0.2.7
-// vendored on: 2021-11-29
+// cpp11 version: 0.4.1
+// vendored on: 2021-12-09
 #pragma once
 
 #include <string.h>  // for strcmp
 
+#include <cstdio>   // for snprintf
 #include <string>   // for string, basic_string
 #include <utility>  // for forward
 
@@ -75,4 +76,43 @@ class package {
 
   SEXP data_;
 };
+
+inline void message(const char* fmt_arg) {
+  static auto R_message = cpp11::package("base")["message"];
+#ifdef CPP11_USE_FMT
+  std::string msg = fmt::format(fmt_arg);
+  R_message(msg.c_str());
+#else
+  char buff[1024];
+  int msg;
+  msg = std::snprintf(buff, 1024, "%s", fmt_arg);
+  if (msg >= 0 && msg < 1024) {
+    R_message(buff);
+  }
+#endif
+}
+
+template <typename... Args>
+void message(const char* fmt_arg, Args... args) {
+  static auto R_message = cpp11::package("base")["message"];
+#ifdef CPP11_USE_FMT
+  std::string msg = fmt::format(fmt_arg, args...);
+  R_message(msg.c_str());
+#else
+  char buff[1024];
+  int msg;
+  msg = std::snprintf(buff, 1024, fmt_arg, args...);
+  if (msg >= 0 && msg < 1024) {
+    R_message(buff);
+  }
+#endif
+}
+
+inline void message(const std::string& fmt_arg) { message(fmt_arg.c_str()); }
+
+template <typename... Args>
+void message(const std::string& fmt_arg, Args... args) {
+  message(fmt_arg.c_str(), args...);
+}
+
 }  // namespace cpp11

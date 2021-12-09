@@ -2,11 +2,13 @@ Package: spress
 Title: Spatial Compression and Encoding
 Version: 0.0.0.9000
 Authors@R: 
-    person(given = "Justin",
+  c(person(given = "Justin",
            family = "Singh-Mohudpur",
            role = c("aut", "cre"),
            email = "justin@justinsingh.me",
-           comment = c(ORCID = "0000-0002-5233-5799"))
+           comment = c(ORCID = "0000-0002-5233-5799")),
+    person(given = "UFOKN",
+           role = "fnd"))
 Description: Space-division based compression and encoding using locally generated Hilbert curve indexing.
 License: MIT + file LICENSE
 URL: https://github.com/program--/spress

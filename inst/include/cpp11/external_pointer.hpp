@@ -1,5 +1,5 @@
-// cpp11 version: 0.2.7
-// vendored on: 2021-11-29
+// cpp11 version: 0.4.1
+// vendored on: 2021-12-09
 #pragma once
 
 #include <cstddef>      // for nullptr_t, NULL
@@ -25,6 +25,9 @@ class external_pointer {
   sexp data_ = R_NilValue;
 
   static SEXP valid_type(SEXP data) {
+    if (data == nullptr) {
+      throw type_error(EXTPTRSXP, NILSXP);
+    }
     if (TYPEOF(data) != EXTPTRSXP) {
       throw type_error(EXTPTRSXP, TYPEOF(data));
     }

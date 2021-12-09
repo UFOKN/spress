@@ -3,7 +3,22 @@
 
 
 #include "cpp11/declarations.hpp"
+#include <R_ext/Visibility.h>
 
+// spress.cpp
+data_frame compress_(integers encoded);
+extern "C" SEXP _spress_compress_(SEXP encoded) {
+  BEGIN_CPP11
+    return cpp11::as_sexp(compress_(cpp11::as_cpp<cpp11::decay_t<integers>>(encoded)));
+  END_CPP11
+}
+// spress.cpp
+integers decompress_(integers x, integers order);
+extern "C" SEXP _spress_decompress_(SEXP x, SEXP order) {
+  BEGIN_CPP11
+    return cpp11::as_sexp(decompress_(cpp11::as_cpp<cpp11::decay_t<integers>>(x), cpp11::as_cpp<cpp11::decay_t<integers>>(order)));
+  END_CPP11
+}
 // spress.cpp
 integers encode_(size_t n, doubles x, doubles y);
 extern "C" SEXP _spress_encode_(SEXP n, SEXP x, SEXP y) {
@@ -27,20 +42,17 @@ extern "C" SEXP _spress_grid_(SEXP n, SEXP bb) {
 }
 
 extern "C" {
-/* .Call calls */
-extern SEXP _spress_decode_(SEXP, SEXP, SEXP);
-extern SEXP _spress_encode_(SEXP, SEXP, SEXP);
-extern SEXP _spress_grid_(SEXP, SEXP);
-
 static const R_CallMethodDef CallEntries[] = {
-    {"_spress_decode_", (DL_FUNC) &_spress_decode_, 3},
-    {"_spress_encode_", (DL_FUNC) &_spress_encode_, 3},
-    {"_spress_grid_",   (DL_FUNC) &_spress_grid_,   2},
+    {"_spress_compress_",   (DL_FUNC) &_spress_compress_,   1},
+    {"_spress_decode_",     (DL_FUNC) &_spress_decode_,     3},
+    {"_spress_decompress_", (DL_FUNC) &_spress_decompress_, 2},
+    {"_spress_encode_",     (DL_FUNC) &_spress_encode_,     3},
+    {"_spress_grid_",       (DL_FUNC) &_spress_grid_,       2},
     {NULL, NULL, 0}
 };
 }
 
-extern "C" void R_init_spress(DllInfo* dll){
+extern "C" attribute_visible void R_init_spress(DllInfo* dll){
   R_registerRoutines(dll, NULL, CallEntries, NULL, NULL);
   R_useDynamicSymbols(dll, FALSE);
   R_forceSymbols(dll, TRUE);

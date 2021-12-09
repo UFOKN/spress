@@ -30,10 +30,10 @@ with `devtools` or `pak`:
 
 ``` r
 # pak
-pak::pkg_install("program--/spress")
+pak::pkg_install("UFOKN/spress")
 
 # devtools
-devtools::install_github("program--/spress")
+devtools::install_github("UFOKN/spress")
 ```
 
 ## Usage
@@ -151,4 +151,4 @@ Unit testing for this library is done with [Catch2](https://github.com/catchorg/
 
 This package was inspired by the paper:
 
-Liu, Dongge, Tao Wang, Xiaojuan Li, Yeqing Ni, Yanping Li, and Zhao Jin. 2020. "A Multiresolution Vector Data Compression Algorithm Based on Space Division" ISPRS International Journal of Geo-Information 9, no. 12: 721. https://doi.org/10.3390/ijgi9120721 
+Liu, Dongge, Tao Wang, Xiaojuan Li, Yeqing Ni, Yanping Li, and Zhao Jin. 2020. "A Multiresolution Vector Data Compression Algorithm Based on Space Division" ISPRS International Journal of Geo-Information 9, no. 12: 721. https://doi.org/10.3390/ijgi9120721

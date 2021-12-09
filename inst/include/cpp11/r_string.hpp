@@ -1,5 +1,5 @@
-// cpp11 version: 0.2.7
-// vendored on: 2021-11-29
+// cpp11 version: 0.4.1
+// vendored on: 2021-12-09
 #pragma once
 
 #include <string>       // for string, basic_string, operator==
@@ -10,6 +10,7 @@
 #include "cpp11/as.hpp"       // for as_sexp
 #include "cpp11/protect.hpp"  // for unwind_protect, protect, protect::function
 #include "cpp11/sexp.hpp"     // for sexp
+
 namespace cpp11 {
 
 class r_string {
@@ -69,8 +70,6 @@ inline SEXP as_sexp(std::initializer_list<r_string> il) {
   return data;
 }
 
-inline bool is_na(const r_string& x) { return x == NA_STRING; }
-
 template <typename T, typename R = void>
 using enable_if_r_string = enable_if_t<std::is_same<T, cpp11::r_string>::value, R>;
 
@@ -90,4 +89,10 @@ enable_if_r_string<T, SEXP> as_sexp(T from) {
 
   return res;
 }
+
+template <>
+inline r_string na() {
+  return NA_STRING;
+}
+
 }  // namespace cpp11

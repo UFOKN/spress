@@ -1,5 +1,5 @@
-// cpp11 version: 0.2.7
-// vendored on: 2021-11-29
+// cpp11 version: 0.4.1
+// vendored on: 2021-12-09
 #pragma once
 
 #include <algorithm>         // for min
@@ -13,12 +13,16 @@
 #include "cpp11/protect.hpp"    // for SEXP, SEXPREC, REAL_ELT, R_Preserve...
 #include "cpp11/r_vector.hpp"   // for vector, vector<>::proxy, vector<>::...
 #include "cpp11/sexp.hpp"       // for sexp
+
 // Specializations for doubles
 
 namespace cpp11 {
 
 template <>
 inline SEXP r_vector<double>::valid_type(SEXP data) {
+  if (data == nullptr) {
+    throw type_error(REALSXP, NILSXP);
+  }
   if (TYPEOF(data) != REALSXP) {
     throw type_error(REALSXP, TYPEOF(data));
   }
@@ -132,5 +136,33 @@ typedef r_vector<double> doubles;
 
 }  // namespace writable
 
-inline bool is_na(double x) { return ISNA(x); }
+typedef r_vector<int> integers;
+
+inline doubles as_doubles(sexp x) {
+  if (TYPEOF(x) == REALSXP) {
+    return as_cpp<doubles>(x);
+  }
+
+  else if (TYPEOF(x) == INTSXP) {
+    integers xn = as_cpp<integers>(x);
+    size_t len = xn.size();
+    writable::doubles ret;
+    for (size_t i = 0; i < len; ++i) {
+      ret.push_back(static_cast<double>(xn[i]));
+    }
+    return ret;
+  }
+
+  throw type_error(REALSXP, TYPEOF(x));
+}
+
+template <>
+inline double na() {
+  return NA_REAL;
+}
+
+template <>
+inline bool is_na(const double& x) {
+  return ISNA(x);
+}
 }  // namespace cpp11

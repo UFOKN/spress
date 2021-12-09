@@ -2,15 +2,17 @@
 #ifndef SPATE_H_
 #define SPATE_H_
 
-#include <string>
-#include <vector>
-#include <tuple>
 #include <algorithm>
+#include <numeric>
+#include <string>
+#include <tuple>
+#include <vector>
 
+using std::abs;
 using std::size_t;
-using std::vector;
-using std::tuple;
 using std::string;
+using std::tuple;
+using std::vector;
 
 namespace spate
 {
@@ -168,9 +170,9 @@ namespace spate
 
         // Find closest index
         typename vector<T>::iterator index = lb;
-        T min = std::abs(*lb - comp);
+        T min = abs(*lb - comp);
         for (typename vector<T>::iterator it = lb + 1; it != up; ++it) {
-            T tmp = std::abs(*it - comp);
+            T tmp = abs(*it - comp);
             if (tmp < min) {
                 min   = tmp;
                 index = it;
@@ -229,6 +231,48 @@ namespace spate
         }
 
         return tuple<vector<T>, vector<T>>{x, y};
+    }
+
+    inline tuple<vector<size_t>, vector<size_t>> compress(vector<size_t> x)
+    {
+        size_t xn = x.size();
+        vector<size_t> order(xn);
+        vector<size_t> new_x(xn);
+
+        // Create and fill permutation vector
+        std::iota(order.begin(), order.end(), 0);
+
+        // Sort permutation vector based on `x`
+        std::sort(order.begin(), order.end(), [&](size_t i, size_t j) {
+            return x[i] < x[j];
+        });
+
+        // Create new vector based on ordering
+        std::transform(order.begin(), order.end(), new_x.begin(), [&](size_t i) {
+            return x[i];
+        });
+        
+        // Get diff
+        std::adjacent_difference(new_x.begin(), new_x.end(), new_x.begin());
+
+        return tuple<vector<size_t>, vector<size_t>>{new_x, order};
+    }
+
+    inline vector<size_t> decompress(vector<size_t> x, vector<size_t> order)
+    {
+        size_t xn = x.size();
+
+        // Get cumulative sum of encoded vector
+        vector<size_t> y(xn);
+        std::partial_sum(x.begin(), x.end(), y.begin(), std::plus<size_t>());
+
+        // Resort vector by sort permutation
+        vector<size_t> z(xn);
+        for (size_t i = 0; i < xn; ++i) {
+            z[order[i]] = y[i]; 
+        }
+
+        return z;
     }
 }
 

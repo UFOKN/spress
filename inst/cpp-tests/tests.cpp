@@ -43,3 +43,29 @@ TEST_CASE("grid/closest", "Ensure closest function works as expected")
     REQUIRE(spate::closest(test_vals, 9.0) == 4);
     REQUIRE(spate::closest(test_vals, 9.7) == 4);   
 }
+
+TEST_CASE("compression", "Ensure compression works as expected")
+{
+    vector<size_t> test_vals = {8, 32, 317, 2, 654, 12, 9};
+    tuple<vector<size_t>, vector<size_t>> compressed = spate::compress(test_vals);
+
+    vector<size_t> expected_indices = {2, 6, 1, 3, 20, 285, 337};
+    vector<size_t> expected_order = {3, 0, 6, 5, 1, 2, 4};
+
+    for (size_t i = 0; i < test_vals.size(); ++i) {
+        REQUIRE(std::get<0>(compressed)[i] == expected_indices[i]);
+        REQUIRE(std::get<1>(compressed)[i] == expected_order[i]);
+    }
+}
+
+TEST_CASE("decompression", "Ensure decompression works as expected")
+{
+    vector<size_t> test_indices = {2, 6, 1, 3, 20, 285, 337};
+    vector<size_t> test_order = {3, 0, 6, 5, 1, 2, 4};
+    vector<size_t> expected = {8, 32, 317, 2, 654, 12, 9};
+    vector<size_t> decompressed = spate::decompress(test_indices, test_order);
+
+    for (size_t i = 0; i < expected.size(); ++i) {
+        REQUIRE(decompressed[i] == expected[i]);
+    }
+}

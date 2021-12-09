@@ -1,5 +1,5 @@
-// cpp11 version: 0.2.7
-// vendored on: 2021-11-29
+// cpp11 version: 0.4.1
+// vendored on: 2021-12-09
 #pragma once
 
 #include <string>  // for string, basic_string
@@ -42,7 +42,8 @@ class environment {
 
  public:
   environment(SEXP env) : env_(env) {}
-  proxy operator[](SEXP name) const { return {env_, name}; }
+  environment(sexp env) : env_(env) {}
+  proxy operator[](const SEXP name) const { return {env_, name}; }
   proxy operator[](const char* name) const { return operator[](safe[Rf_install](name)); }
   proxy operator[](const std::string& name) const { return operator[](name.c_str()); }
 

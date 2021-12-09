@@ -1,5 +1,5 @@
-// cpp11 version: 0.2.7
-// vendored on: 2021-11-29
+// cpp11 version: 0.4.1
+// vendored on: 2021-12-09
 #pragma once
 
 #ifdef R_INTERNALS_H_
@@ -34,4 +34,13 @@ namespace literals {
 constexpr R_xlen_t operator"" _xl(unsigned long long int value) { return value; }
 
 }  // namespace literals
+
+template <typename T>
+inline T na();
+
+template <typename T>
+inline bool is_na(const T& value) {
+  return value == na<T>();
+}
+
 }  // namespace cpp11

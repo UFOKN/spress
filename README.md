@@ -22,10 +22,10 @@ installed, you can install the development version from
 
 ``` r
 # pak
-pak::pkg_install("program--/spress")
+pak::pkg_install("UFOKN/spress")
 
 # devtools
-devtools::install_github("program--/spress")
+devtools::install_github("UFOKN/spress")
 ```
 
 ## Usage
