@@ -42,12 +42,16 @@ extern "C" SEXP _spress_grid_(SEXP n, SEXP bb) {
 }
 
 extern "C" {
+/* .Call calls */
+extern SEXP run_testthat_tests(SEXP);
+
 static const R_CallMethodDef CallEntries[] = {
     {"_spress_compress_",   (DL_FUNC) &_spress_compress_,   1},
     {"_spress_decode_",     (DL_FUNC) &_spress_decode_,     3},
     {"_spress_decompress_", (DL_FUNC) &_spress_decompress_, 2},
     {"_spress_encode_",     (DL_FUNC) &_spress_encode_,     3},
     {"_spress_grid_",       (DL_FUNC) &_spress_grid_,       2},
+    {"run_testthat_tests",  (DL_FUNC) &run_testthat_tests,  1},
     {NULL, NULL, 0}
 };
 }

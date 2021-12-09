@@ -1,4 +1,4 @@
 library(testthat)
 library(spress)
 
-# test_check("spress")
+test_check("spress")
