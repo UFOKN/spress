@@ -5,35 +5,35 @@
 #include "cpp11/declarations.hpp"
 #include <R_ext/Visibility.h>
 
-// spress.cpp
+// spress_r.cpp
 data_frame compress_(integers encoded);
 extern "C" SEXP _spress_compress_(SEXP encoded) {
   BEGIN_CPP11
     return cpp11::as_sexp(compress_(cpp11::as_cpp<cpp11::decay_t<integers>>(encoded)));
   END_CPP11
 }
-// spress.cpp
+// spress_r.cpp
 integers decompress_(integers x, integers order);
 extern "C" SEXP _spress_decompress_(SEXP x, SEXP order) {
   BEGIN_CPP11
     return cpp11::as_sexp(decompress_(cpp11::as_cpp<cpp11::decay_t<integers>>(x), cpp11::as_cpp<cpp11::decay_t<integers>>(order)));
   END_CPP11
 }
-// spress.cpp
+// spress_r.cpp
 integers encode_(size_t n, doubles x, doubles y);
 extern "C" SEXP _spress_encode_(SEXP n, SEXP x, SEXP y) {
   BEGIN_CPP11
     return cpp11::as_sexp(encode_(cpp11::as_cpp<cpp11::decay_t<size_t>>(n), cpp11::as_cpp<cpp11::decay_t<doubles>>(x), cpp11::as_cpp<cpp11::decay_t<doubles>>(y)));
   END_CPP11
 }
-// spress.cpp
+// spress_r.cpp
 data_frame decode_(size_t n, integers h, doubles bb);
 extern "C" SEXP _spress_decode_(SEXP n, SEXP h, SEXP bb) {
   BEGIN_CPP11
     return cpp11::as_sexp(decode_(cpp11::as_cpp<cpp11::decay_t<size_t>>(n), cpp11::as_cpp<cpp11::decay_t<integers>>(h), cpp11::as_cpp<cpp11::decay_t<doubles>>(bb)));
   END_CPP11
 }
-// spress.cpp
+// spress_r.cpp
 data_frame grid_(size_t n, doubles bb);
 extern "C" SEXP _spress_grid_(SEXP n, SEXP bb) {
   BEGIN_CPP11

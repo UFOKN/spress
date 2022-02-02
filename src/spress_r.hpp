@@ -1,6 +1,6 @@
 #pragma once
-#ifndef _SPRESS_H_
-#define _SPRESS_H_
+#ifndef _SPRESS_R_H_
+#define _SPRESS_R_H_
 
 #include "cpp11.hpp"
 using cpp11::data_frame;

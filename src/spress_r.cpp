@@ -1,4 +1,4 @@
-#include <spate.hpp>
+#include <spress.hpp>
 #include <cpp11.hpp>
 using namespace cpp11;
 
@@ -7,7 +7,7 @@ data_frame compress_(integers encoded)
 {
     using namespace cpp11::literals;
     vector<size_t> stdv_e(encoded.begin(), encoded.end());
-    tuple<vector<size_t>, vector<size_t>> compressed = spate::compress(stdv_e);
+    tuple<vector<size_t>, vector<size_t>> compressed = spress::compress(stdv_e);
     
     return writable::data_frame({
         "index"_nm = std::get<0>(compressed),
@@ -21,14 +21,14 @@ integers decompress_(integers x, integers order)
     vector<size_t> stdv_x(x.begin(), x.end());
     vector<size_t> stdv_o(order.begin(), order.end());
 
-    return as_sexp(spate::decompress(stdv_x, stdv_o));
+    return as_sexp(spress::decompress(stdv_x, stdv_o));
 }
 
 [[cpp11::register]]
 integers encode_(size_t n, doubles x, doubles y)
 {
     return as_sexp(
-        spate::encode(
+        spress::encode(
             n,
             as_cpp<vector<double>>(x),
             as_cpp<vector<double>>(y)
@@ -42,7 +42,7 @@ data_frame decode_(size_t n, integers h, doubles bb)
     using namespace cpp11::literals;
 
     vector<size_t> h_vec(h.begin(), h.end());
-    tuple<vector<double>, vector<double>> decoded = spate::decode(
+    tuple<vector<double>, vector<double>> decoded = spress::decode(
         n,
         h_vec,
         bb["xmax"],
@@ -62,7 +62,7 @@ data_frame grid_(size_t n, doubles bb)
 {
     using namespace cpp11::literals;
     tuple<vector<double>, vector<double>, vector<size_t>, vector<size_t>, vector<size_t>> hgrid =
-        spate::grid::grid(
+        spress::grid::grid(
             n,
             bb["xmax"], bb["xmin"],
             bb["ymax"], bb["ymin"]

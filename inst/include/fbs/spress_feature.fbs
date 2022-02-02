@@ -1,0 +1,25 @@
+// flatbuffers schema code is a fork of the flatgeobuf 3.21.3 schema.
+// Copyright (c) 2018, Björn Harrtell
+
+include "spress_header.fbs";
+
+namespace spress.io;
+
+table Geometry {
+  ends: [uint];          // Array of end index in flat coordinates per geometry part
+  index: [double];       // Flat index coordinate array
+  z: [double];           // Flat z height array
+  m: [double];           // Flat m measurement array
+  t: [double];           // Flat t geodetic decimal year time array
+  tm: [ulong];           // Flat tm time nanosecond measurement array
+  type: GeometryType;    // Type of geometry (only relevant for elements in heterogeneous collection types)
+  parts: [Geometry];     // Array of parts (for heterogeneous collection types)
+}
+
+table Feature {
+  geometry: Geometry;  // Geometry
+  properties: [ubyte]; // Custom buffer, variable length collection of key/value pairs (key=ushort)
+  columns: [Column];   // Attribute columns schema (optional)
+}
+
+root_type Feature;

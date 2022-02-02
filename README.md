@@ -174,11 +174,11 @@ or [snappy](https://github.com/google/snappy)).
 
 ## C++ Library
 
-Included in this package is the header-only C++ library `libspate`,
+Included in this package is the header-only C++ library `libspress`,
 which contains the foundational code used for encoding/decoding, and was
 developed specifically for this package.
 
-This can be found at `inst/include/spate.hpp` from the root of this
+This can be found at `inst/include/spress.hpp` from the root of this
 repository. Unit testing for this library is done with
 [Catch](https://github.com/catchorg/Catch2) via `testthat`. See
 [`testthat::use_catch`](https://testthat.r-lib.org/reference/use_catch.html)

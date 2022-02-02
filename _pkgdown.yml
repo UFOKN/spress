@@ -1,0 +1,17 @@
+home:
+  title: "spress: Geospatial Encoding & Compression"
+
+template:
+  params:
+    bootswatch: cosmo
+
+reference:
+  - contents:
+    - encode
+    - decode
+    - compress
+    - decompress
+  
+  - title: "spress Classes"
+    contents:
+    - spress_index

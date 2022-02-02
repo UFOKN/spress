@@ -7,12 +7,12 @@ Authors@R:
            role = c("aut", "cre"),
            email = "justin@justinsingh.me",
            comment = c(ORCID = "0000-0002-5233-5799")),
-    person(given = "UFOKN",
+    person(given = "Urban Flooding Open Knowledge Network (UF-OKN)",
            role = "fnd"))
 Description: Space-division based compression and encoding using locally generated Hilbert curve indexing.
 License: MIT + file LICENSE
-URL: https://github.com/program--/spress
-BugReports: https://github.com/program--/spress/issues
+URL: https://github.com/UFOKN/spress
+BugReports: https://github.com/UFOKN/spress/issues
 Suggests: testthat (>= 3.0.0), xml2
 Config/testthat/edition: 3
 Encoding: UTF-8
